@@ -14,15 +14,28 @@ body {
 .bold {
   font-weight: 700;
 }
+*{
+  padding:0px;
+  margin:0px;
+  font-family: var(--font-ubuntu), sans-serif;
+  font-weight: 400;
+}
 .main-container {
   display: flex;
   flex-direction: column;
-  background-color: #ca2626;
+  background-color: #EEF5FF;
   height: 100vh;
+  width: 100%;
+  max-width: 1280px;
 }
 
 @media (min-width: 768px) {
   .main-container {
     flex-direction: column;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .main-container {
+    flex-direction: row;
   }
 }

@@ -1,12 +1,15 @@
-
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
+
+import Header from "./layout/Header";
+import { MainContainer } from "./layout/MainContainer";
+import ThemeProvider from "./theme/themeProvider";
+
 import "./globals.css";
-import Header from "./components/HeaderTemp";
-import MainContainer  from "./components/MainContainer";
+
 const ubuntu = Ubuntu({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-ubuntu",
 });
 
@@ -17,18 +20,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <body className={ubuntu.variable}>
-        <MainContainer>
-          <Header />
-          {children}
-        </MainContainer>
+        <ThemeProvider>
+          <MainContainer>
+            <Header />
+            {children}
+          </MainContainer>
+        </ThemeProvider>
       </body>
     </html>
   );
 }
-
