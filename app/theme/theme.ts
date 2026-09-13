@@ -1,13 +1,13 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 import {
   typography,
   padding,
   spacing,
-  layout,
   radius,
   shadow,
   fontWeight,
   letterSpacing,
+  layoutToken,
 } from './token/semantics/index';
 import { form } from './token/components/form';
 export const theme = createTheme({
@@ -15,12 +15,12 @@ export const theme = createTheme({
     typography,
     padding,
     spacing,
-    layout,
     radius,
     shadow,
     fontWeight,
     letterSpacing,
-    form
+    form,
+    layoutToken,
   },
 });
 

@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 
 export const FormContainer = styled('form')(({ theme }) => ({
   width: '100%',
-  maxWidth: theme.tokens.layout.container.form,
+  maxWidth: theme.tokens.layoutToken.container.form,
   margin: '0 auto',
 }));
 

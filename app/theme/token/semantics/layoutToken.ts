@@ -1,6 +1,6 @@
 // token/semantics/layout.ts
 
-export const layout = {
+export const layoutToken = {
   container: {
     form: "640px",
     reading: "760px",

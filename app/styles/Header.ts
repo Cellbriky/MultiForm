@@ -4,7 +4,7 @@ import { fontSize } from '../theme/token/primitives/typography';
 
 export const HeaderContainer = styled(Box)(({ theme }) => ({
   width: '100%',
-  height: theme.tokens.layout.header.height,
+  height: theme.tokens.layoutToken.header.height,
   backgroundColor: theme.palette.primary.main,
   backgroundImage: 'url("/bg-sidebar-mobile.svg")',
   backgroundRepeat: 'no-repeat',
@@ -16,9 +16,9 @@ export const HeaderContainer = styled(Box)(({ theme }) => ({
   bottom: 0,
 
   [theme.breakpoints.up('md')]: {
-    flex: `0 0 ${theme.tokens.layout.sidebar.width}`,
-    width: theme.tokens.layout.sidebar.width,
-    maxWidth: theme.tokens.layout.sidebar.width,
+    flex: `0 0 ${theme.tokens.layoutToken.sidebar.width}`,
+    width: theme.tokens.layoutToken.sidebar.width,
+    maxWidth: theme.tokens.layoutToken.sidebar.width,
     height: '100%',
     backgroundImage: 'url("/bg-sidebar-desktop.svg")',
     borderRadius: theme.tokens.radius.control,

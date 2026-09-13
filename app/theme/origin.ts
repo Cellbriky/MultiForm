@@ -2,7 +2,7 @@ import {typography} from "./token/semantics/index";
 import {
   padding,
   spacing,
-  layout,
+  layoutToken,
   breakpoints,
   radius,
   shadow,
@@ -16,7 +16,7 @@ declare module "@mui/material/styles" {
       typography: typeof typography;
       padding: typeof padding;
       spacing: typeof spacing;
-      layout: typeof layout;
+      layoutToken: typeof layoutToken;
       breakpoints: typeof breakpoints;
       radius: typeof radius;
       shadow: typeof shadow;
@@ -31,7 +31,7 @@ declare module "@mui/material/styles" {
       typography?: typeof typography;
       padding?: typeof padding;
       spacing?: typeof spacing;
-      layout?: typeof layout;
+      layoutToken?: typeof layoutToken;
       breakpoints?: typeof breakpoints;
       radius?: typeof radius;
       shadow?: typeof shadow;
