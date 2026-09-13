@@ -1,8 +1,32 @@
 @import "tailwindcss";
-body {
-  font-family: var(--font-ubuntu), sans-serif;
-  font-weight: 400;
+
+:root {
+  --container-page: 1280px;
+  --form-container: 640px;
 }
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  font-weight: 400;
+  background-color: #eef5ff !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-ubuntu), sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
 .regular {
   font-weight: 400;
 }
@@ -14,28 +38,87 @@ body {
 .bold {
   font-weight: 700;
 }
-*{
-  padding:0px;
-  margin:0px;
-  font-family: var(--font-ubuntu), sans-serif;
-  font-weight: 400;
+input{
+  padding-inline: 12px;
+  padding-block: 8px;
+  border: 1px solid #92929c;
+  border-radius: 4px;
+  box-shadow:  0.1px 0.1px 2px #92929c;
 }
-.main-container {
+
+.layoutContainer {
   display: flex;
   flex-direction: column;
-  background-color: #EEF5FF;
-  height: 100vh;
   width: 100%;
-  max-width: 1280px;
+  min-height: 100vh;
+  background-color: #eef5ff;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding-inline: 16px;
+}
+
+.pageContainer {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-top: -28px;
+
+  background-color: #fff;
+  border-radius: 8px;
+  padding-inline: 24px;
+  padding-block: 32px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0a3265;
+
+  overflow-wrap: anywhere;
+}
+
+.caption {
+  margin-block: 12px;
+  color: #92929c;
+  font-weight: 500;
 }
 
 @media (min-width: 768px) {
-  .main-container {
-    flex-direction: column;
+  body{
+    display:flex;
+    align-items: center;
+    justify-content: center;
   }
-}
-@media screen and (min-width: 1024px) {
-  .main-container {
+  .layoutContainer {
     flex-direction: row;
+    width: 850px;
+    height: 500px;
+    min-height: 0px;
+    max-width: var(--container-page);
+    margin: auto;
+    background-color: #fff;
+    padding: 24px;
+  }
+
+  .page-container {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .main-content {
+    flex: 1;
+    min-width: 0;
   }
 }

@@ -9,12 +9,11 @@ export const layout = {
   },
 
   sidebar: {
-    width: "280px",
-    //width: "240px",
+    width: "240px",
   },
 
   header: {
-    height: "120px",
+    height: "138px",
     //height: "64px",
   },
 } as const;

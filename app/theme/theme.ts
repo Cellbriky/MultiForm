@@ -9,6 +9,7 @@ import {
   fontWeight,
   letterSpacing,
 } from './token/semantics/index';
+import { form } from './token/components/form';
 export const theme = createTheme({
   tokens: {
     typography,
@@ -19,6 +20,7 @@ export const theme = createTheme({
     shadow,
     fontWeight,
     letterSpacing,
+    form
   },
 });
 

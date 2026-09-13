@@ -9,6 +9,7 @@ import {
   fontWeight,
   letterSpacing,
 } from './token/semantics/index';
+import {form} from "./token/components/form"
 declare module "@mui/material/styles" {
   interface Theme {
     tokens: {
@@ -21,6 +22,7 @@ declare module "@mui/material/styles" {
       shadow: typeof shadow;
       fontWeight: typeof fontWeight;
       letterSpacing: typeof letterSpacing;
+      form: typeof form;
     };
   }
 
@@ -35,6 +37,7 @@ declare module "@mui/material/styles" {
       shadow?: typeof shadow;
       fontWeight?: typeof fontWeight;
       letterSpacing?: typeof letterSpacing;
+      form?: typeof form;
     };
   }
 }

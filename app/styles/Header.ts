@@ -1,5 +1,6 @@
 import { Box, Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { fontSize } from '../theme/token/primitives/typography';
 
 export const HeaderContainer = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -7,15 +8,20 @@ export const HeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   backgroundImage: 'url("/bg-sidebar-mobile.svg")',
   backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
+  //backgroundPosition: 'center',
   backgroundSize: 'cover',
+  position: 'static',
+  top: 0,
+  left: 0,
+  bottom: 0,
 
   [theme.breakpoints.up('md')]: {
-    position: 'static',
+    flex: `0 0 ${theme.tokens.layout.sidebar.width}`,
     width: theme.tokens.layout.sidebar.width,
     maxWidth: theme.tokens.layout.sidebar.width,
-    height: '100vh',
+    height: '100%',
     backgroundImage: 'url("/bg-sidebar-desktop.svg")',
+    borderRadius: theme.tokens.radius.control,
   },
 }));
 
@@ -31,11 +37,6 @@ export const NavContainer = styled(Box)(({ theme }) => ({
     justifyContent: 'flex-start',
     flexDirection: 'column',
     padding: theme.tokens.padding.container.tablet,
-    height: '100vh',
-  },
-
-  [theme.breakpoints.up('lg')]: {
-    padding: theme.tokens.padding.container.desktop,
   },
 }));
 
@@ -50,8 +51,7 @@ export const NavList = styled(Box)(({ theme }) => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    gap: theme.tokens.spacing.section.sm,
-    height: '100%',
+    gap: theme.tokens.spacing.stack.xl
   },
 }));
 
@@ -91,6 +91,8 @@ export const NavNumber = styled(Box, {
   backgroundColor: active ? '#BEE1FF' : 'transparent',
   [theme.breakpoints.up('md')]: {
     paddingInline: '16px',
+    paddingBlock: "0px",
+    fontSize:theme.tokens.typography.caption
   },
   '&:hover': {
     color: '#082D57',
@@ -111,7 +113,7 @@ export const NavMenu = styled(Box)(({ theme }) => ({
 export const NavCaption = styled(Box)(({ theme }) => ({
   margin: 0,
   padding: 0,
-  color: '#EDF4FE',
+  color: '#EDF4FE !important',
   fontWeight: 300,
   fontSize: theme.tokens.typography.overline.fontSize,
   lineHeight: theme.tokens.typography.overline.lineHeight,
@@ -121,8 +123,8 @@ export const NavName = styled(Box)(({ theme }) => ({
   margin: 0,
   padding: 0,
   color: '#fff',
-  fontSize: theme.tokens.typography.bodySmall.fontSize,
-  lineHeight: theme.tokens.typography.bodySmall.lineHeight,
+  fontSize: theme.tokens.typography.overline.fontSize,
+  lineHeight: theme.tokens.typography.overline.lineHeight,
   fontWeight: theme.tokens.fontWeight.medium,
   letterSpacing: theme.tokens.letterSpacing.loose,
 }));
