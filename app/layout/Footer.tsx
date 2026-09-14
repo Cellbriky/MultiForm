@@ -1,6 +1,5 @@
 import React from 'react';
-
-import Submit from '../feature/footer/Submit';
+import Submit from '../feature/footer/Submit'
 
 export function Footer() {
   return (

@@ -3,9 +3,13 @@ import React from 'react'
 const step2 = () => {
   return (
     <div>
-      <h1>Step 2</h1>
+      <div className="pageContainer">
+        <h1>Select your plans</h1>
+        <div className="caption">You hva the options of monthly or yearly billing</div>
+        
+      </div>
     </div>
-  )
+  );
 }
 
 export default step2

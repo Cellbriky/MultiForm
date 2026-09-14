@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useFormStore } from '../../store/formstore';
 import { useRouter } from 'next/navigation';
-import { FormContainer, InputContent, FormLabel, FormSection, FormField } from './styles';
+import { FormContainer, InputContent, Error, FormLabel, FormSection, FormField } from './styles';
 
 type step1Data = {
   name: string;
@@ -42,7 +42,7 @@ const Step1Form = () => {
                   required: 'Name is required',
                 })}
               />
-              {errors.name && <p>{errors.name.message}</p>}
+              {errors.name && <Error>{errors.name.message}</Error>}
             </InputContent>
           </FormField>
           <FormField>
@@ -54,24 +54,23 @@ const Step1Form = () => {
                 placeholder="e.g stephenKin@gmail.com"
                 {...register('email', { required: 'Email is required' })}
               />
-              {errors.email && <p>{errors.email.message}</p>}
+              {errors.email && <Error>{errors.email.message}</Error>}
             </InputContent>
           </FormField>
           <FormField>
             <FormLabel htmlFor="phone">Phone Number</FormLabel>
             <InputContent>
               <input
-                type="number"
+                type="text"
                 placeholder="+234 506 6050"
                 id="phone"
                 {...register('phoneNo', { required: 'Phone Number is Required' })}
               />
-              {errors.phoneNo && <p>{errors.phoneNo.message}</p>}
+              {errors.phoneNo && <Error>{errors.phoneNo.message}</Error>}
             </InputContent>
           </FormField>
         </FormSection>
       </FormContainer>
-    
     </div>
   );
 };

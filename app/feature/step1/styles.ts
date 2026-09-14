@@ -33,14 +33,22 @@ export const FormField = styled(Box)(({ theme }) => ({
 
 export const FormLabel = styled('label')(({ theme }) => ({
   display: 'block',
-  fontSize: theme.tokens.typography.caption.fontSize,
+  fontSize: theme.tokens.typography.bodySmall.fontSize,
   color: '#0a3265',
   fontWeight: theme.tokens.fontWeight.medium,
   lineHeight: theme.tokens.typography.caption.lineHeight,
 }));
+export const Error = styled(Box)(({ theme }) => ({
+  margin: "0px",
+  padding: "0px",
+  fontSize: theme.tokens.typography.caption.fontSize,
+  display: 'block',
+  lineHeight: theme.tokens.typography.caption.lineHeight,
+  color:"red",
+}))
 
 export const InputContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.tokens.form.inputGap,
+ 
 }));
