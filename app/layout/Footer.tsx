@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Footer = () => {
-  return (
-    <div>
-      This is footer
-      <h1>CHFJDFJKKAADFASKFGfdsgfgsfdgsdfgsdfgs sfg sfg sfgsgfsccgsfgsgsfsgsDFSGFGSDF</h1>
-    </div>
-  );
-};
+import Submit from '../feature/footer/Submit';
 
+export function Footer() {
+  return (
+    <footer>
+      <Submit formID="step-one-form" />
+    </footer>
+  );
+}
 export default Footer;

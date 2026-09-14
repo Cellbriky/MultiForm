@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useFormStore } from '../../store/formstore';
 import { useRouter } from 'next/navigation';
 import { FormContainer, InputContent, FormLabel, FormSection, FormField } from './styles';
+
 type step1Data = {
   name: string;
   email: string;
@@ -28,7 +29,7 @@ const Step1Form = () => {
   };
   return (
     <div>
-      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer id="step-one-form" onSubmit={handleSubmit(onSubmit)}>
         <FormSection>
           <FormField>
             <FormLabel htmlFor="name">Name</FormLabel>
@@ -36,6 +37,7 @@ const Step1Form = () => {
               <input
                 id="name"
                 type="text"
+                placeholder="e.g. Stephen King"
                 {...register('name', {
                   required: 'Name is required',
                 })}
@@ -49,21 +51,27 @@ const Step1Form = () => {
               <input
                 type="text"
                 id="email"
+                placeholder="e.g stephenKin@gmail.com"
                 {...register('email', { required: 'Email is required' })}
               />
               {errors.email && <p>{errors.email.message}</p>}
             </InputContent>
           </FormField>
           <FormField>
-            <FormLabel htmlFor='phone'>Phone Number</FormLabel>
+            <FormLabel htmlFor="phone">Phone Number</FormLabel>
             <InputContent>
-              <input type='number' id='phone'{...register("phoneNo", { required: "Phone Number is Required" })} />
+              <input
+                type="number"
+                placeholder="+234 506 6050"
+                id="phone"
+                {...register('phoneNo', { required: 'Phone Number is Required' })}
+              />
               {errors.phoneNo && <p>{errors.phoneNo.message}</p>}
             </InputContent>
           </FormField>
         </FormSection>
-        <button type="submit">Next</button>
       </FormContainer>
+    
     </div>
   );
 };
