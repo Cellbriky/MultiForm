@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useFormStore } from '../../store/formstore';
 import { useRouter } from 'next/navigation';
-import { FormContainer, InputContent, Error, FormLabel, FormSection, FormField } from './styles';
+import { FormContainer, InputContent, Error, Input, FormLabel, FormSection, FormField } from './styles';
 
 type step1Data = {
   name: string;
@@ -34,7 +34,7 @@ const Step1Form = () => {
           <FormField>
             <FormLabel htmlFor="name">Name</FormLabel>
             <InputContent>
-              <input
+              <Input
                 id="name"
                 type="text"
                 placeholder="e.g. Stephen King"
@@ -48,7 +48,7 @@ const Step1Form = () => {
           <FormField>
             <FormLabel htmlFor="email">Email Address</FormLabel>
             <InputContent>
-              <input
+              <Input
                 type="text"
                 id="email"
                 placeholder="e.g stephenKin@gmail.com"
@@ -60,7 +60,7 @@ const Step1Form = () => {
           <FormField>
             <FormLabel htmlFor="phone">Phone Number</FormLabel>
             <InputContent>
-              <input
+              <Input
                 type="text"
                 placeholder="+234 506 6050"
                 id="phone"

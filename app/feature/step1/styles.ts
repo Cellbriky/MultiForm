@@ -50,5 +50,12 @@ export const Error = styled(Box)(({ theme }) => ({
 export const InputContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
- 
+}));
+export const Input = styled('input')(({ theme }) => ({
+  paddingInline: '12px',
+  paddingBlock: '8px',
+  border: '1px solid #92929c',
+  borderRadius: '4px',
+  boxShadow: '  0.1px 0.1px 2px #92929c',
+  boxShaow: '0 1px 3px rgba(0, 0, 0, 0.08)',
 }));
