@@ -6,7 +6,7 @@ import Step1Form from '../feature/step1/Step1Form';
 const page = () => {
   return (
     <div className="pageContainer">
-      <h1>Perffyr Info</h1>
+      <h1>Perffyrkkkk Info</h1>
       <div className='caption'>Please Provide Your name, email address, and phone number.</div>
       <Step1Form/>
     </div>
