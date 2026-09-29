@@ -70,7 +70,7 @@ button{
   display: flex;
   flex-direction: column;
   min-width: 0;
-  height: 75%;
+  height: 80%;
   justify-content: space-between;
   background-color: #eef5ff;
 }
