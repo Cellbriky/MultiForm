@@ -1,17 +1,31 @@
 import type { Metadata } from 'next';
-import { Ubuntu } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
-
 import { LayoutContainer } from './layout/LayoutContainer';
 import ThemeProvider from './theme/themeProvider';
 
 import './globals.css';
 
-const ubuntu = Ubuntu({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+const ubuntu = localFont({
+  src: [
+    {
+      path: '../public/fonts/Ubuntu-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Ubuntu-Medium.ttf',
+      weight: '500',
+      style: 'Medium',
+    },
+    {
+      path: '../public/fonts/Ubuntu-Bold.ttf',
+      weight: '700',
+      style: 'Bold',
+    }
+  ],
   variable: '--font-ubuntu',
 });
 

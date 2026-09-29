@@ -25,6 +25,7 @@ const initialFormData: FormData = {
     largeStorage: false,
     serviceAmount: 0,
     storageAmount: 0,
+    customizable: false,
   },
 };
 

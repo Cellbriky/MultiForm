@@ -11,6 +11,7 @@ export interface FormData {
   addOn: {
     onlineService: boolean;
     largeStorage: boolean;
+    customizable: boolean;
     serviceAmount: number;
     storageAmount: number;
   };

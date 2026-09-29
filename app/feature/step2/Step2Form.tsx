@@ -85,7 +85,7 @@ const Step2Form = () => {
 
   return (
     <div>
-      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer id='step-form' onSubmit={handleSubmit(onSubmit)}>
         <FormSection>
           <FormField>
             {/* Arcade */}
@@ -197,8 +197,6 @@ const Step2Form = () => {
           </OptionContainer>
 
           {errors.option && <p>{errors.option.message}</p>}
-
-          <button type="submit">Next</button>
         </FormSection>
       </FormContainer>
     </div>

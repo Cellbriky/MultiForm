@@ -3,8 +3,11 @@ import Submit from '../feature/footer/Submit'
 
 export function Footer() {
   return (
-    <footer>
-      <Submit formID="step-one-form" />
+    <footer style={{
+      backgroundColor:"red"
+    }}>
+      <Submit formID="step-form" />
+      
     </footer>
   );
 }

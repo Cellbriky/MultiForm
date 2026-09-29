@@ -42,8 +42,10 @@ const Header = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/step3">
-              <NavNumber active={pathname === '/step3'}>3</NavNumber>
+            <NavLink href="/step3/monthly">
+              <NavNumber active={pathname === '/step3/yearly' || pathname === '/step3/monthly'}>
+                3
+              </NavNumber>
               <NavMenu>
                 <NavCaption>STEP 3</NavCaption>
                 <NavName>ADD-ONS</NavName>

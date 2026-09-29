@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 export const FormContainer = styled('form')(({ theme }) => ({
   width: '100%',
   maxWidth: theme.tokens.layoutToken.container.form,
-    margin: '12px auto',
-  marginTop:theme.tokens.spacing.stack.lg
+  margin: '12px auto',
+  marginTop: theme.tokens.spacing.stack.lg,
 }));
 
 export const FormSection = styled(Box)(({ theme }) => ({
@@ -39,13 +39,13 @@ export const FormLabel = styled('label')(({ theme }) => ({
   lineHeight: theme.tokens.typography.caption.lineHeight,
 }));
 export const Error = styled(Box)(({ theme }) => ({
-  margin: "0px",
-  padding: "0px",
+  margin: '0px',
+  padding: '0px',
   fontSize: theme.tokens.typography.caption.fontSize,
   display: 'block',
   lineHeight: theme.tokens.typography.caption.lineHeight,
-  color:"red",
-}))
+  color: 'red',
+}));
 
 export const InputContent = styled(Box)(({ theme }) => ({
   display: 'flex',

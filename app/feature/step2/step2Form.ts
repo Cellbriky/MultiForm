@@ -1,4 +1,5 @@
 
+import { Height } from '@mui/icons-material';
 import { Box, styled } from '@mui/material';
 
 export const FormField = (styled)(Box)(({ theme }) => ({
@@ -23,7 +24,7 @@ export const PlanDiv = styled('label', {
 export const Title = styled(Box)(({ theme }) => ({
   fontSize: theme.tokens.typography.bodySmall.fontSize,
   color: '#0a3265',
-  fontWeight: theme.tokens.fontWeight.bold,
+  fontWeight: theme.tokens.fontWeight.medium,
 }));
 export const Overview = styled(Box)(({ theme }) => ({
   fontSize: theme.tokens.typography.bodySmall.fontSize,
@@ -54,7 +55,7 @@ export const LabelTitle = styled('label', {
   shouldForwardProp: (prop) => prop !== 'active',
 })<{ active: boolean }>(({ theme, active }) => ({
   color: active ? '#0a3265' : '#92929c',
-  fontWeight: theme.tokens.fontWeight.bold,
+  fontWeight: theme.tokens.fontWeight.medium,
 }));
 export const RadioDiv = styled(Box)(({ theme }) => ({
   backgroundColor: '#0a3265',
@@ -62,7 +63,8 @@ export const RadioDiv = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   borderRadius: theme.tokens.radius.pill,
-  paddingBlock:"2px"
+  paddingBlock: "2px",
+  paddingInline:"2px",
   
 }));
 export const OptionRadio = styled('input')(({ theme }) => ({
@@ -70,12 +72,17 @@ export const OptionRadio = styled('input')(({ theme }) => ({
   border: '1px solid #0a3265',
   borderRadius: theme.tokens.radius.pill,
   position: 'relative',
-
+  width: "12px",
+  height:"12px",
+  '&:checked': {
+    width: "12px",
+    height:"12px",
+  },
   '&:checked::after': {
     content: '""',
     position: 'absolute',
-    width: '10px',
-    height: '10px',
+    width: '12px',
+    height: '12px',
     borderRadius: '50%',
     backgroundColor: 'white',
     top: '50%',

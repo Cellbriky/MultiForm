@@ -29,7 +29,7 @@ const Step1Form = () => {
   };
   return (
     <div>
-      <FormContainer id="step-one-form" onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer id="step-form" onSubmit={handleSubmit(onSubmit)}>
         <FormSection>
           <FormField>
             <FormLabel htmlFor="name">Name</FormLabel>
