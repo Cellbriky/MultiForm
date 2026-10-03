@@ -2,23 +2,20 @@ import { fontFamily } from '@/app/theme/token/primitives/typography';
 import { fontWeight } from '@/app/theme/token/semantics';
 import { Box, styled } from '@mui/material';
 
-
 export const LabelDiv = styled('label', {
   shouldForwardProp: (prop) => prop !== 'active',
 })<{ active: boolean }>(({ theme, active }) => ({
   position: 'relative',
   backgroundColor: active ? '#F8F9FE' : '#fff',
   display: 'flex',
-  alignItems: "center",
-  justifyContent:"center",
+  alignItems: 'center',
+  justifyContent: 'center',
   gap: theme.tokens.spacing.inline.comfortable,
   paddingInline: theme.tokens.padding.button.inline,
   paddingBlock: theme.tokens.padding.button.block,
   borderRadius: theme.tokens.radius.button,
-  border: active ? '1px solid #8D8BBD' : '1px solid #92929C',
-
+  border: active ? '1px solid #6E65DC' : '1px solid #92929C',
 }));
-
 
 export const InputCheck = styled('input')({
   appearance: 'none',
@@ -30,7 +27,7 @@ export const InputCheck = styled('input')({
 
   '&:checked': {
     backgroundColor: '#453AFF',
-    border: '1px solid #8D8BBD',
+    border: '1px solid #6E65DC',
   },
 
   '&:checked::after': {
@@ -47,9 +44,9 @@ export const InputCheck = styled('input')({
 });
 
 export const AddonDiv = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  flex: 1, 
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
 }));
 
 export const AddonH1 = styled(Box)(({ theme }) => ({
@@ -69,7 +66,12 @@ export const Overline = styled(Box)(({ theme }) => ({
 }));
 export const Amount = styled(Box)(({ theme }) => ({
   fontSize: theme.tokens.typography.overline.fontSize,
-  color: '#716DAB',
+  color: '#6E65DC',
   fontWeight: theme.tokens.fontWeight.medium,
   fontFamily: 'var(--font-ubuntu)',
+}));
+export const ErrorMessage = styled('p')(({ theme }) => ({
+  fontSize: '12px',
+  color: '#d32f2f',
+  lineHeight: '1.4',
 }));

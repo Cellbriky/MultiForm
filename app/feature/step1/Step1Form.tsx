@@ -1,10 +1,12 @@
 'use client';
 import React from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useFormStore } from '../../store/formstore';
 import { useRouter } from 'next/navigation';
-import { FormContainer, InputContent, Error, Input, FormLabel, FormSection, FormField } from './styles';
-
+import { FormContainer, InputContent, Input, FormLabel, FormSection, FormField } from './styles';
+import { useFormContext } from 'react-hook-form';
+import {ErrorMessage} from '../../styles/style'
 type step1Data = {
   name: string;
   email: string;
@@ -13,19 +15,27 @@ type step1Data = {
 const Step1Form = () => {
   const router = useRouter();
   const { formData, updateForm } = useFormStore();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<step1Data>({
-    defaultValues: {
+const {
+  register,
+  handleSubmit,
+  reset,
+  formState: { errors },
+} = useFormContext<step1Data>();
+  useEffect(() => {
+    reset({
       name: formData.name,
       email: formData.email,
       phoneNo: formData.phoneNo,
-    },
-  });
+    });
+  }, [formData, reset]);
   const onSubmit = (data: step1Data) => {
     (updateForm(data), router.push('/step2'));
+    console.log('Step 2 data:', updateForm);
+
+    console.log('Form store:', {
+      ...formData,
+      ...updateForm,
+    });
   };
   return (
     <div>
@@ -42,7 +52,7 @@ const Step1Form = () => {
                   required: 'Name is required',
                 })}
               />
-              {errors.name && <Error>{errors.name.message}</Error>}
+              {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
             </InputContent>
           </FormField>
           <FormField>
@@ -54,7 +64,7 @@ const Step1Form = () => {
                 placeholder="e.g stephenKin@gmail.com"
                 {...register('email', { required: 'Email is required' })}
               />
-              {errors.email && <Error>{errors.email.message}</Error>}
+              {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
             </InputContent>
           </FormField>
           <FormField>
@@ -66,7 +76,7 @@ const Step1Form = () => {
                 id="phone"
                 {...register('phoneNo', { required: 'Phone Number is Required' })}
               />
-              {errors.phoneNo && <Error>{errors.phoneNo.message}</Error>}
+              {errors.phoneNo && <ErrorMessage>{errors.phoneNo.message}</ErrorMessage>}
             </InputContent>
           </FormField>
         </FormSection>

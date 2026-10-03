@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { FormData } from '../type/form';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type FormStore = {
   formData: FormData;
@@ -29,21 +30,30 @@ const initialFormData: FormData = {
   },
 };
 
-export const useFormStore = create<FormStore>((set) => ({
-  formData: initialFormData,
 
-  updateForm: (data) => {
-    set((state) => ({
-      formData: {
-        ...state.formData,
-        ...data,
-      },
-    }));
-  },
-
-  resetForm: () => {
-    set({
+export const useFormStore = create<FormStore>()(
+  persist(
+    (set) => ({
       formData: initialFormData,
-    });
-  },
-}));
+
+      updateForm: (data) => {
+        set((state) => ({
+          formData: {
+            ...state.formData,
+            ...data,
+          },
+        }));
+      },
+
+      resetForm: () => {
+        set({
+          formData: initialFormData,
+        });
+      },
+    }),
+    {
+      name: 'multi-step-form',
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);

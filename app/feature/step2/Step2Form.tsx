@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useFormStore } from '../../store/formstore';
 import { useRouter } from 'next/navigation';
 import { FormContainer, FormSection } from '../step1/styles';
+import { useFormContext } from 'react-hook-form';
+import {ErrorMessage} from '../../styles/style'
 import {
   FormField,
   InputRadio,
@@ -34,7 +36,7 @@ const yearlyPlans = {
 
 type Plan = keyof typeof plans;
 
-type BillingOption = 'monthly' | 'yearly';
+type BillingOption = 'monthly' | 'yearly' ;
 
 type Step2Data = {
   plan: Plan;
@@ -46,17 +48,13 @@ const Step2Form = () => {
 
   const { formData, updateForm } = useFormStore();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<Step2Data>({
-    defaultValues: {
-      plan: formData.plan || 'arcade',
-      option: formData.option || 'monthly',
-    },
-  });
+const {
+  register,
+  handleSubmit,
+  reset,
+  watch,
+  formState: { errors },
+} = useFormContext<Step2Data>();
 
   const selectedPlan = watch('plan');
   const selectedOption = watch('option');
@@ -85,7 +83,7 @@ const Step2Form = () => {
 
   return (
     <div>
-      <FormContainer id='step-form' onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer id="step-form" onSubmit={handleSubmit(onSubmit)}>
         <FormSection>
           <FormField>
             {/* Arcade */}
@@ -106,9 +104,8 @@ const Step2Form = () => {
                 type="radio"
                 value="arcade"
                 id="arcade"
-                defaultChecked={true}
                 {...register('plan', {
-                  required: 'Choose a plan',
+                  required: 'Please select a plan to continue',
                 })}
               />
             </PlanDiv>
@@ -132,7 +129,7 @@ const Step2Form = () => {
                 value="advanced"
                 id="advanced"
                 {...register('plan', {
-                  required: 'Choose a plan',
+                  required: 'Please select a plan to continue',
                 })}
               />
             </PlanDiv>
@@ -156,14 +153,15 @@ const Step2Form = () => {
                 value="pro"
                 id="pro"
                 {...register('plan', {
-                  required: 'Choose a plan',
+                  required: 'Please select a plan to continue',
                 })}
               />
             </PlanDiv>
           </FormField>
 
-          {errors.plan && <p>{errors.plan.message}</p>}
+          {errors.plan && <ErrorMessage>{errors.plan.message}</ErrorMessage>}
 
+          {/* Billing Option */}
           {/* Billing Option */}
           <OptionContainer>
             <LabelTitle htmlFor="monthly" active={selectedOption === 'monthly'}>
@@ -175,20 +173,12 @@ const Step2Form = () => {
                 type="radio"
                 value="monthly"
                 id="monthly"
-                defaultChecked={true}
                 {...register('option', {
-                  required: 'Choose a billing option',
+                  required: 'Please select a billing option to continue.',
                 })}
               />
 
-              <OptionRadio
-                type="radio"
-                value="yearly"
-                id="yearly"
-                {...register('option', {
-                  required: 'Choose a billing option',
-                })}
-              />
+              <OptionRadio type="radio" value="yearly" id="yearly" {...register('option')} />
             </RadioDiv>
 
             <LabelTitle htmlFor="yearly" active={selectedOption === 'yearly'}>
@@ -196,7 +186,9 @@ const Step2Form = () => {
             </LabelTitle>
           </OptionContainer>
 
-          {errors.option && <p>{errors.option.message}</p>}
+          {errors.option && <ErrorMessage role="alert">{errors.option.message}</ErrorMessage>}
+
+          {errors.option && <ErrorMessage>{errors.option.message}</ErrorMessage>}
         </FormSection>
       </FormContainer>
     </div>

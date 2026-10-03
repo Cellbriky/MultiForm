@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { PageContainer } from '../styles/Step1'
+import { PageContainer } from '../styles/style'
 import '../globals.css';
 import Step1Form from '../feature/step1/Step1Form';
 const page = () => {

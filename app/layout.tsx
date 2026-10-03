@@ -5,7 +5,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import { LayoutContainer } from './layout/LayoutContainer';
 import ThemeProvider from './theme/themeProvider';
-
+import FormProvider from './provider/FormProvider'
 import './globals.css';
 
 const ubuntu = localFont({
@@ -44,11 +44,13 @@ export default function RootLayout({
       <body className={`${ubuntu.variable} ${ubuntu.className}`}>
         <ThemeProvider>
           <LayoutContainer>
-            <Header />
-            <div className="page-container">
-              <main className="main-content">{children}</main>
-              <Footer />
-            </div>
+            <FormProvider>
+              <Header />
+              <div className="page-container">
+                <main className="main-content">{children}</main>
+                <Footer />
+              </div>
+            </FormProvider>
           </LayoutContainer>
         </ThemeProvider>
       </body>

@@ -3,8 +3,9 @@
 import { FormContainer, FormSection, FormField } from '../step1/styles';
 import { useFormStore } from '../../store/formstore';
 import { useForm } from 'react-hook-form';
-import { AddonDiv, LabelDiv, AddonH1, Overline, InputCheck, Amount } from './styles';
+import { AddonDiv, LabelDiv, AddonH1, Overline, InputCheck, Amount, ErrorMessage } from './styles';
 import { useRouter } from 'next/navigation';
+import { useFormContext } from 'react-hook-form';
 type Step3PageProps = {
   choice: 'monthly' | 'yearly';
 };
@@ -28,13 +29,13 @@ type Step3Data = {
 const Step3Page = ({ choice }: Step3PageProps) => {
   const { formData, updateForm } = useFormStore();
   const router=useRouter()
-  const { register, handleSubmit, watch } = useForm<Step3Data>({
-    defaultValues: {
-      onlineService: formData.addOn.onlineService,
-      largeStorage: formData.addOn.largeStorage,
-      customizable: formData.addOn.customizable,
-    },
-  });
+const {
+  register,
+  handleSubmit,
+  reset,
+  watch,
+  formState: { errors },
+} = useFormContext<Step3Data>();
 
   const selectService = watch('onlineService');
   const selectStorage = watch('largeStorage');
@@ -43,21 +44,24 @@ const Step3Page = ({ choice }: Step3PageProps) => {
   const selectedAddOns = choice === 'monthly' ? addOnsPlan : yearlyAddOns;
 
   const onSubmit = (data: Step3Data) => {
-    const updateData = {
+    const updatedData = {
       addOn: {
         onlineService: data.onlineService,
         largeStorage: data.largeStorage,
         customizable: data.customizable,
-
         serviceAmount: data.onlineService ? selectedAddOns.onlineService : 0,
-
         storageAmount: data.largeStorage ? selectedAddOns.largeStorage : 0,
       },
     };
 
-    updateForm(updateData);
+    updateForm(updatedData);
     router.push("/step4")
-    console.log('Step 3 data:', updateData);
+    console.log('Step 2 data:', updatedData);
+
+    console.log('Form store:', {
+      ...formData,
+      ...updatedData,
+    });
   };
 
   return (
@@ -66,7 +70,13 @@ const Step3Page = ({ choice }: Step3PageProps) => {
         <FormSection>
           <FormField>
             <LabelDiv htmlFor="service" active={selectService}>
-              <InputCheck type="checkbox" id="service" {...register('onlineService')} />
+              <InputCheck
+                type="checkbox"
+                id="service"
+                {...register('onlineService', {
+                  required: 'Please select this option to continue',
+                })}
+              />
 
               <AddonDiv>
                 <AddonH1>Online Service</AddonH1>
@@ -75,11 +85,16 @@ const Step3Page = ({ choice }: Step3PageProps) => {
 
               {choice === 'monthly' ? <Amount>+$1/mo</Amount> : <Amount>+$10/yr</Amount>}
             </LabelDiv>
+            {errors.onlineService && <ErrorMessage>{errors.onlineService.message}</ErrorMessage>}
           </FormField>
 
           <FormField>
             <LabelDiv htmlFor="storage" active={selectStorage}>
-              <InputCheck type="checkbox" id="storage" {...register('largeStorage')} />
+              <InputCheck
+                type="checkbox"
+                id="storage"
+                {...register('largeStorage', { required: 'Please select this option to continue' })}
+              />
 
               <AddonDiv>
                 <AddonH1>Large Storage</AddonH1>
@@ -88,6 +103,7 @@ const Step3Page = ({ choice }: Step3PageProps) => {
 
               {choice === 'monthly' ? <Amount>+$2/mo</Amount> : <Amount>+$20/yr</Amount>}
             </LabelDiv>
+            {errors.largeStorage && <ErrorMessage>{errors.largeStorage.message}</ErrorMessage>}
           </FormField>
 
           <FormField>
@@ -108,8 +124,6 @@ const Step3Page = ({ choice }: Step3PageProps) => {
             </LabelDiv>
           </FormField>
         </FormSection>
-
-        <input type="submit" />
       </FormContainer>
     </div>
   );
