@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
-import { useFormContext } from 'react-hook-form';
-import { useSubmit } from '@/app/hook/useStepValidation';
-import { Step1Form, Step2Form, Step3Form } from '@/app/schema/formSchema';
+import { usePathname, useRouter } from 'next/navigation';
+
+import { useSubmit } from '../../hook/useStepValidation';
+import { useFormStore } from '../../store/formstore';
+
 import {
   HeaderContainer,
   NavContainer,
@@ -17,56 +18,73 @@ import {
   NavLink,
 } from '../../styles/Header';
 
-
-type FormValues = Step1Form & Step2Form & Step3Form;
-
 const Header = () => {
   const pathname = usePathname();
-
-  const { handleSubmit } = useFormContext<FormValues>();
+  const router = useRouter();
 
   const { submitStep1, submitStep2, submitStep3 } = useSubmit();
+  const { formData } = useFormStore();
 
-  const handleStepClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    step: number,
+  // Navigate to the previous step
+  const handleBack = () => {
+    switch (pathname) {
+      case '/step2':
+        router.push('/');
+        break;
+
+      case '/step3/monthly':
+      case '/step3/yearly':
+        router.push('/step2');
+        break;
+
+      case '/step4':
+        router.push(`/step3/${formData.option}`);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  // Validate Step 1 before navigating forward
+  const handleSubmit1 = async (
+    event: React.MouseEvent<HTMLAnchorElement>
   ) => {
     event.preventDefault();
+    await submitStep1();
+  };
 
-    if (step === 1) {
-      handleSubmit((data) => {
-        submitStep1(data);
-      })();
+  // Validate Step 2 before navigating forward
+  const handleSubmit2 = async (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    await submitStep2();
+  };
 
-      return;
-    }
-
-    if (step === 2) {
-      handleSubmit((data) => {
-        submitStep2(data);
-      })();
-
-      return;
-    }
-
-    if (step === 3) {
-      handleSubmit((data) => {
-        submitStep3(data);
-      })();
-
-      return;
-    }
+  // Validate Step 3 before navigating forward
+  const handleSubmit3 = async (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    await submitStep3();
   };
 
   return (
     <HeaderContainer>
       <NavContainer>
         <NavList>
-
+          {/* Step 1 */}
           <NavItem>
             <NavLink
               href="/"
-              onClick={(event) => handleStepClick(event, 1)}
+              onClick={(event) => {
+                event.preventDefault();
+                handleBack();
+                if (pathname !== '/') {
+                  router.push('/');
+                }
+              }}
             >
               <NavNumber active={pathname === '/'}>
                 1
@@ -79,10 +97,20 @@ const Header = () => {
             </NavLink>
           </NavItem>
 
+          {/* Step 2 */}
           <NavItem>
             <NavLink
               href="/step2"
-              onClick={(event) => handleStepClick(event, 2)}
+              onClick={
+                pathname === '/'
+                  ? handleSubmit1
+                  : (event) => {
+                      event.preventDefault();
+                      if (pathname !== '/step2') {
+                        router.push('/step2');
+                      }
+                    }
+              }
             >
               <NavNumber active={pathname === '/step2'}>
                 2
@@ -95,10 +123,23 @@ const Header = () => {
             </NavLink>
           </NavItem>
 
+          {/* Step 3 */}
           <NavItem>
             <NavLink
-              href="/step3/monthly"
-              onClick={(event) => handleStepClick(event, 3)}
+              href={`/step3/${formData.option}`}
+              onClick={
+                pathname==='/' || pathname === '/step2' || pathname === '/step3/monthly' || pathname === '/step3/yearly' || pathname === '/step4'
+                  ? handleSubmit2
+                  : (event) => {
+                      event.preventDefault();
+                      if (
+                        pathname !== '/step3/monthly' &&
+                        pathname !== '/step3/yearly'
+                      ) {
+                        router.push(`/step3/${formData.option}`);
+                      }
+                    }
+              }
             >
               <NavNumber
                 active={
@@ -116,16 +157,22 @@ const Header = () => {
             </NavLink>
           </NavItem>
 
+          {/* Step 4 */}
           <NavItem>
             <NavLink
               href="/step4"
-              onClick={(event) => {
-                event.preventDefault();
-
-                handleSubmit((data) => {
-                  submitStep3(data);
-                })();
-              }}
+              onClick={
+                pathname === '/' || pathname === '/step2' ||
+                pathname === '/step3/monthly' ||
+                pathname === '/step3/yearly'
+                  ? handleSubmit3
+                  : (event) => {
+                      event.preventDefault();
+                      if (pathname !== '/step4') {
+                        router.push('/step4');
+                      }
+                    }
+              }
             >
               <NavNumber active={pathname === '/step4'}>
                 4
@@ -137,7 +184,6 @@ const Header = () => {
               </NavMenu>
             </NavLink>
           </NavItem>
-
         </NavList>
       </NavContainer>
     </HeaderContainer>
@@ -145,4 +191,3 @@ const Header = () => {
 };
 
 export default Header;
-

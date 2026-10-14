@@ -11,7 +11,7 @@ const Step4Form = () => {
       <p>{formData.phoneNo}</p>
       <p>{formData.plan}</p>
       <p>{formData.option}</p>
-      <p>{formData.amount}</p>
+      <p>{formData.planAmount}</p>
 
       <p>{formData.addOn.onlineService ? 'Online Service' : ''}</p>
       <p>{formData.addOn.largeStorage ? 'Large Storage' : ''}</p>

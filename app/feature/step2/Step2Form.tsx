@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useFormStore } from '../../store/formstore';
 import { useRouter } from 'next/navigation';
 import { FormContainer, FormSection } from '../step1/styles';
-import { useFormContext } from 'react-hook-form';
-import {ErrorMessage} from '../../styles/style'
+import { ErrorMessage } from '../../styles/style';
+import { type FormValues } from '../../schema/formSchema';
 import {
   FormField,
   InputRadio,
@@ -19,7 +19,6 @@ import {
   RadioDiv,
   YearOverview,
 } from './step2Form';
-
 // Monthly prices
 const plans = {
   arcade: 9,
@@ -34,72 +33,66 @@ const yearlyPlans = {
   pro: 150,
 };
 
-type Plan = keyof typeof plans;
-
-type BillingOption = 'monthly' | 'yearly' ;
-
-type Step2Data = {
-  plan: Plan;
-  option: BillingOption;
-};
-
 const Step2Form = () => {
   const router = useRouter();
-
   const { formData, updateForm } = useFormStore();
+  const {
+    register,
+    trigger,
+    getValues,
+    reset,
+    watch,
+    formState: { errors },
+  } = useFormContext<FormValues>();
 
-const {
-  register,
-  handleSubmit,
-  reset,
-  watch,
-  formState: { errors },
-} = useFormContext<Step2Data>();
+  useEffect(() => {
+    reset({
+      plan: formData.plan,
+      option: formData.option,
+    });
+  }, [formData.plan, formData.option, reset]);
 
   const selectedPlan = watch('plan');
   const selectedOption = watch('option');
 
   const selectedPlans = selectedOption === 'yearly' ? yearlyPlans : plans;
 
-  const onSubmit = (data: Step2Data) => {
-    const amount = data.option === 'monthly' ? plans[data.plan] : yearlyPlans[data.plan];
-
+  const onSubmit = async () => {
+    const isValid = await trigger(['plan', 'option']);
+    if (!isValid) {
+      return;
+    }
+    const data = getValues(['plan', 'option']);
     const updatedData = {
-      ...data,
-      amount,
+      plan: data[0],
+      option: data[1],
+      planAmount: selectedPlans[data[0] as keyof typeof selectedPlans],
     };
-
     updateForm(updatedData);
-
+    router.push(`/step3/${data[1]}`);
     console.log('Step 2 data:', updatedData);
-
-    console.log('Form store:', {
-      ...formData,
-      ...updatedData,
-    });
-
-    router.push(`/step3/${data.option}`);
   };
-
   return (
     <div>
-      <FormContainer id="step-form" onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer
+        id="step-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
         <FormSection>
           <FormField>
             {/* Arcade */}
             <PlanDiv htmlFor="arcade" active={selectedPlan === 'arcade'}>
               <img src="/icon-arcade.svg" alt="Arcade" />
-
               <div>
                 <Title>Arcade</Title>
-
                 <Overview>
                   ${selectedPlans.arcade}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
                 </Overview>
-
                 <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
               </div>
-
               <InputRadio
                 type="radio"
                 value="arcade"

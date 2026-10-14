@@ -14,16 +14,16 @@ const initialFormData: FormData = {
   phoneNo: '',
 
   // Billing option
-  option: 'monthly',
+  option: '',
 
   // Selected plan
-  plan: 'arcade',
+  plan: '',
 
-  amount: 0,
+  planAmount: 0,
 
   addOn: {
-    onlineService: false,
-    largeStorage: false,
+    onlineService: true,
+    largeStorage: true,
     serviceAmount: 0,
     storageAmount: 0,
     customizable: false,

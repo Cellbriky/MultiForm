@@ -2,10 +2,11 @@
 
 import { FormContainer, FormSection, FormField } from '../step1/styles';
 import { useFormStore } from '../../store/formstore';
-import { useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { AddonDiv, LabelDiv, AddonH1, Overline, InputCheck, Amount, ErrorMessage } from './styles';
 import { useRouter } from 'next/navigation';
-import { useFormContext } from 'react-hook-form';
+import { step3Schema, type Step3Form } from '../../schema/formSchema';
+import { useEffect } from 'react';
 type Step3PageProps = {
   choice: 'monthly' | 'yearly';
 };
@@ -20,80 +21,94 @@ const yearlyAddOns = {
   largeStorage: 20,
 };
 
-type Step3Data = {
-  onlineService: boolean;
-  largeStorage: boolean;
-  customizable: boolean;
-};
-
 const Step3Page = ({ choice }: Step3PageProps) => {
   const { formData, updateForm } = useFormStore();
-  const router=useRouter()
-const {
-  register,
-  handleSubmit,
-  reset,
-  watch,
-  formState: { errors },
-} = useFormContext<Step3Data>();
+  const router = useRouter();
+  const {
+    register,
+    trigger,
+    getValues,
+    reset,
+    watch,
+    formState: { errors },
+  } = useFormContext<Step3Form>();
+  useEffect(() => {
+    reset({
+      addOn: {
+        onlineService: formData.addOn.onlineService,
+        largeStorage: formData.addOn.largeStorage,
+        customizable: formData.addOn.customizable,
+      },
+    });
+  }, [formData, reset]);
+  const selectService = watch('addOn.onlineService');
+  const selectStorage = watch('addOn.largeStorage');
+  const selectCustomizable = watch('addOn.customizable');
 
-  const selectService = watch('onlineService');
-  const selectStorage = watch('largeStorage');
-  const selectCustomizable = watch('customizable');
-
-  const selectedAddOns = choice === 'monthly' ? addOnsPlan : yearlyAddOns;
-
-  const onSubmit = (data: Step3Data) => {
+  const onSubmit = async () => {
+    const isValid = await trigger(['addOn.onlineService', 'addOn.largeStorage']);
+    if (!isValid) {
+      return;
+    }
+    const data = getValues();
     const updatedData = {
       addOn: {
-        onlineService: data.onlineService,
-        largeStorage: data.largeStorage,
-        customizable: data.customizable,
-        serviceAmount: data.onlineService ? selectedAddOns.onlineService : 0,
-        storageAmount: data.largeStorage ? selectedAddOns.largeStorage : 0,
+        onlineService: data.addOn.onlineService,
+        largeStorage: data.addOn.largeStorage,
+        customizable: data.addOn.customizable,
+        serviceAmount: data.addOn.onlineService
+          ? choice === 'monthly'
+            ? addOnsPlan.onlineService
+            : yearlyAddOns.onlineService
+          : 0,
+        storageAmount: data.addOn.largeStorage
+          ? choice === 'monthly'
+            ? addOnsPlan.largeStorage
+            : yearlyAddOns.largeStorage
+          : 0,
       },
     };
-
     updateForm(updatedData);
-    router.push("/step4")
-    console.log('Step 2 data:', updatedData);
-
-    console.log('Form store:', {
-      ...formData,
-      ...updatedData,
-    });
+    router.push('/step4');
+    console.log(formData);
   };
-
   return (
     <div>
-      <FormContainer id="step-form" onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer
+        id="step-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
         <FormSection>
           <FormField>
             <LabelDiv htmlFor="service" active={selectService}>
               <InputCheck
                 type="checkbox"
                 id="service"
-                {...register('onlineService', {
+                {...register('addOn.onlineService', {
                   required: 'Please select this option to continue',
                 })}
               />
-
               <AddonDiv>
                 <AddonH1>Online Service</AddonH1>
                 <Overline>Access to multiplayer games</Overline>
               </AddonDiv>
-
               {choice === 'monthly' ? <Amount>+$1/mo</Amount> : <Amount>+$10/yr</Amount>}
             </LabelDiv>
-            {errors.onlineService && <ErrorMessage>{errors.onlineService.message}</ErrorMessage>}
+            {errors.addOn?.onlineService && (
+              <ErrorMessage>{errors.addOn.onlineService.message}</ErrorMessage>
+            )}
           </FormField>
-
           <FormField>
             <LabelDiv htmlFor="storage" active={selectStorage}>
               <InputCheck
                 type="checkbox"
                 id="storage"
-                {...register('largeStorage', { required: 'Please select this option to continue' })}
+                {...register('addOn.largeStorage', {
+                  required: 'Please select this option to continue',
+                })}
               />
 
               <AddonDiv>
@@ -103,7 +118,9 @@ const {
 
               {choice === 'monthly' ? <Amount>+$2/mo</Amount> : <Amount>+$20/yr</Amount>}
             </LabelDiv>
-            {errors.largeStorage && <ErrorMessage>{errors.largeStorage.message}</ErrorMessage>}
+            {errors.addOn?.largeStorage && (
+              <ErrorMessage>{errors.addOn.largeStorage.message}</ErrorMessage>
+            )}
           </FormField>
 
           <FormField>
@@ -112,7 +129,7 @@ const {
                 type="checkbox"
                 id="customizable"
                 disabled
-                {...register('customizable')}
+                {...register('addOn.customizable')}
               />
 
               <AddonDiv>

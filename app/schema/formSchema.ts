@@ -1,21 +1,68 @@
+
 import { z } from 'zod';
+
+// STEP 1
 export const step1Schema = z.object({
-  name: z.string().min(2, 'Name must at less be 2 characters').trim(),
-  email: z.string().email('Please enter a valid email address').trim(),
-  phoneNo: z.string().min(7, 'Please enter a valid Phone number').trim(),
+  name: z.string().trim().min(2, 'Name must be at least 2 characters'),
+  email: z.string().trim().email('Please enter a valid email address'),
+  phoneNo: z.string().trim().min(7, 'Please enter a valid phone number'),
 });
+
 export type Step1Form = z.infer<typeof step1Schema>;
+
+// STEP 2
+export const plans = {
+  arcade: 9,
+  advanced: 12,
+  pro: 15,
+} as const;
+
+export const yearlyPlans = {
+  arcade: 90,
+  advanced: 120,
+  pro: 150,
+} as const;
+
 export const step2Schema = z.object({
-  plan: z.enum(['arcade', 'advanced', 'pro']),
-  option: z.enum(['monthly', 'yearly']),
-  amount: z.number().positive('Amount must be greater than 0'),
+  plan: z
+    .enum(['arcade', 'advanced', 'pro', ''])
+    .pipe(
+      z.enum(['arcade', 'advanced', 'pro']),
+    ),
+
+  option: z
+    .enum(['monthly', 'yearly', ''])
+    .pipe(
+      z.enum(['monthly', 'yearly']),
+    ),
 });
-export type Step2Form = z.infer<typeof step2Schema>;
+
+export type Step2Form = z.output<typeof step2Schema>;
+
+// STEP 3
 export const step3Schema = z.object({
-  onlineService: z.boolean(),
-  largeStorage: z.boolean(),
-  customizable: z.boolean(),
-  serviceAmount: z.number().nonnegative(),
-  storageAmount: z.number().nonnegative(),
+  addOn: z.object({
+    onlineService: z.boolean(),
+    largeStorage: z.boolean(),
+    customizable: z.boolean(),
+  }),
+}).refine((data) => {
+  const { onlineService, largeStorage, customizable } = data.addOn;
+  return onlineService || largeStorage || customizable;
+}, {
+  message: 'Please select at least one add-on',
 });
-export type Step3Form = z.infer<typeof step3Schema>
+
+export type Step3Form = z.infer<typeof step3Schema>;
+
+// COMPLETE FORM
+export const formSchema = step1Schema
+  .merge(step2Schema)
+  .merge(step3Schema);
+
+// Input values can contain empty strings.
+export type FormValues = z.input<typeof formSchema>;
+
+// Output values contain only valid plan and billing selections.
+export type ValidatedFormValues = z.output<typeof formSchema>;
+
