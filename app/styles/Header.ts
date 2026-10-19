@@ -87,17 +87,15 @@ export const NavNumber = styled(Box, {
   paddingInline: '12px',
   paddingBlock: '6px',
   alignItems: 'center',
+  justifyContent: 'center',
   display: 'flex',
   backgroundColor: active ? '#BEE1FF' : 'transparent',
+  transition: 'all 0.2s ease-in-out',
+
   [theme.breakpoints.up('md')]: {
     paddingInline: '16px',
-    paddingBlock: "0px",
-    fontSize:theme.tokens.typography.caption
-  },
-  '&:hover': {
-    color: '#082D57',
-    backgroundColor: '#BEE1FF',
-    borderColor: '#BEE1FF',
+    paddingBlock: 0,
+    // Use a valid font-size token here if needed.
   },
 }));
 

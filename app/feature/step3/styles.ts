@@ -1,5 +1,4 @@
-import { fontFamily } from '@/app/theme/token/primitives/typography';
-import { fontWeight } from '@/app/theme/token/semantics';
+
 import { Box, styled } from '@mui/material';
 
 export const LabelDiv = styled('label', {
