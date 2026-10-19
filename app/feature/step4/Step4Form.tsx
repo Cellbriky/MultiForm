@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import React from 'react';
 import { useFormStore } from '@/app/store/formstore';
@@ -20,30 +21,44 @@ import {
 
 const Step4Form = () => {
   const { formData } = useFormStore();
+
   const { plan, planAmount, option, addOn } = formData;
+
   const billingPeriod = option === 'monthly' ? 'mo' : 'yr';
-  const totalAmount = planAmount + addOn.serviceAmount + addOn.storageAmount;
+
+  const serviceAmount = addOn?.serviceAmount ?? 0;
+  const storageAmount = addOn?.storageAmount ?? 0;
+
+  const totalAmount = (planAmount ?? 0) + serviceAmount + storageAmount;
+
+  const formattedPlan = plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'No plan selected';
+
+  const formattedOption = option
+    ? option.charAt(0).toUpperCase() + option.slice(1)
+    : 'No billing option selected';
+
   return (
     <Container>
       <SectionOne>
         <Grid>
           <GridDivBtm>
             <H1>
-              {plan.charAt(0).toUpperCase() + plan.slice(1)} (
-              {option.charAt(0).toUpperCase() + option.slice(1)})
+              {formattedPlan} ({formattedOption})
               <Change>
-                <Link href={'/step2'}>Change</Link>
+                <Link href="/step2">Change</Link>
               </Change>
             </H1>
+
             <OptionHeader>
-              ${planAmount}/{billingPeriod}
+              ${planAmount ?? 0}/{billingPeriod}
             </OptionHeader>
           </GridDivBtm>
+
           {addOn?.onlineService && (
             <GridDiv>
               <p>Online Service</p>
               <OptionDiv>
-                ${addOn.serviceAmount}/{billingPeriod}
+                ${serviceAmount}/{billingPeriod}
               </OptionDiv>
             </GridDiv>
           )}
@@ -52,7 +67,7 @@ const Step4Form = () => {
             <GridDiv>
               <p>Large Storage</p>
               <OptionDiv>
-                ${addOn.storageAmount}/{billingPeriod}
+                ${storageAmount}/{billingPeriod}
               </OptionDiv>
             </GridDiv>
           )}
@@ -61,8 +76,11 @@ const Step4Form = () => {
 
       <SectionTwo>
         <TotalContainer>
-          <TotalLabel>Total (per {option})</TotalLabel>
-          <TotalAmount>${totalAmount}/{billingPeriod}</TotalAmount>
+          <TotalLabel>Total (per {option || 'billing period'})</TotalLabel>
+
+          <TotalAmount>
+            ${totalAmount}/{billingPeriod}
+          </TotalAmount>
         </TotalContainer>
       </SectionTwo>
     </Container>
