@@ -87,8 +87,8 @@ const isStep3 = pathname === '/step3/monthly' || pathname === '/step3/yearly';
           <div style={{ fontWeight: 500, fontSize: '14px' }} onClick={handleBackButton}>
             Go Back
           </div>
-          <button type="submit" form={formID}>
-            Next Step
+          <button style={{ backgroundColor: '#483FFE' }} type="submit" form={formID}>
+            Confirm
           </button>
         </div>
       )}

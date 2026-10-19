@@ -13,6 +13,9 @@ import {
   Change,
   OptionHeader,
   OptionDiv,
+  TotalContainer,
+  TotalLabel,
+  TotalAmount,
 } from './styles';
 
 const Step4Form = () => {
@@ -57,11 +60,10 @@ const Step4Form = () => {
       </SectionOne>
 
       <SectionTwo>
-        <h3>Selected Add-ons</h3>
-        <div>
-          <div>Total</div>
-          {totalAmount}
-        </div>
+        <TotalContainer>
+          <TotalLabel>Total (per {option})</TotalLabel>
+          <TotalAmount>${totalAmount}/{billingPeriod}</TotalAmount>
+        </TotalContainer>
       </SectionTwo>
     </Container>
   );

@@ -6,7 +6,9 @@ export const SectionOne = styled(Box)(({ theme }) => ({
   padding: theme.tokens.padding.container.mobile,
   borderRadius: theme.tokens.spacing.stack.xs
 }));
-export const SectionTwo = styled(Box)(({ theme }) => ({}));
+export const SectionTwo = styled(Box)(({ theme }) => ({
+  padding: theme.tokens.padding.container.mobile,
+}));
 
 export const Grid = styled(Box)({
   display: 'grid',
@@ -25,12 +27,11 @@ export const GridDiv = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  fontSize:theme.tokens.typography.bodySmall.fontSize
 }));
 export const H1 = styled(Box)(({ theme }) => ({
   fontWeight: theme.tokens.fontWeight.bold,
   color: "#0a3265",
-  fontSize:theme.tokens.typography.bodySmall.fontSize
+  
 }))
 export const OptionHeader = styled(Box)(({ theme }) => ({
   fontWeight: theme.tokens.fontWeight.bold,
@@ -46,6 +47,18 @@ export const Change = styled(Box)(({ theme }) => ({
   top: '-6px',
   color: ' #92929c',
   fontWeight: theme.tokens.fontWeight.regular,
-  fontSize:theme.tokens.typography.bodySmall.fontSize,
+}));
+export const TotalContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 }));
 
+export const TotalLabel = styled(Box)(({ theme }) => ({
+  // Add your total label styles here
+}));
+
+export const TotalAmount = styled(Box)(({ theme }) => ({
+  fontWeight: theme.tokens.fontWeight.bold,
+  color: '#5D55BC',
+}));

@@ -4,6 +4,7 @@ import type { FormValues } from '@/app/schema/formSchema';
 import { useFormContext } from 'react-hook-form';
 import { useFormStore } from '@/app/store/formstore';
 import { useRouter } from 'next/navigation';
+import { useFormState } from 'react-dom';
 
 const plans = {
   arcade: 9,
@@ -16,7 +17,19 @@ const yearlyPlans = {
   advanced: 120,
   pro: 150,
 };
+type Step3PageProps = {
+  choice: 'monthly' | 'yearly';
+};
 
+const addOnsPlan = {
+  onlineService: 1,
+  largeStorage: 2,
+};
+
+const yearlyAddOns = {
+  onlineService: 10,
+  largeStorage: 20,
+};
 export const useSubmit = () => {
   const { updateForm } = useFormStore();
   const router = useRouter();
@@ -68,7 +81,7 @@ const submitStep3 = async () => {
 
   const data = getValues();
   const storedAddOn = useFormStore.getState().formData.addOn;
-
+  const chioce=useFormStore.getState().formData.option
   const addOn = data.addOn ??
     storedAddOn ?? {
       onlineService: false,
@@ -80,11 +93,11 @@ const submitStep3 = async () => {
 
   updateForm({
     addOn: {
-      onlineService: addOn.onlineService,
-      largeStorage: addOn.largeStorage,
-      customizable: addOn.customizable,
-      serviceAmount: addOn.onlineService ? (data.option === 'monthly' ? 1 : 10) : 0,
-      storageAmount: addOn.largeStorage ? (data.option === 'monthly' ? 2 : 20) : 0,
+      onlineService: storedAddOn.onlineService,
+      largeStorage: storedAddOn.largeStorage,
+      customizable: storedAddOn.customizable,
+      serviceAmount: storedAddOn.onlineService ? chioce === 'monthly' ? addOnsPlan.onlineService  : yearlyAddOns.onlineService : 0,
+      storageAmount: storedAddOn.largeStorage ? chioce === 'monthly' ? addOnsPlan.largeStorage  : yearlyAddOns.largeStorage : 0
     },
   });
 
