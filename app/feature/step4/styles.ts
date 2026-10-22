@@ -62,3 +62,57 @@ export const TotalAmount = styled(Box)(({ theme }) => ({
   fontWeight: theme.tokens.fontWeight.bold,
   color: '#5D55BC',
 }));
+
+// Confirmation dialog Box
+export const DialogContainer = styled('dialog')(({ theme }) => ({
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.spacing(2),
+
+  width: 'calc(100% - 32px)',
+  maxWidth: '420px',
+
+  minHeight: '220px',
+  maxHeight: 'calc(100dvh - 32px)',
+  overflowY: 'auto',
+
+  padding: theme.spacing(4),
+
+  backgroundColor: '#fff',
+  border: 'none',
+  borderRadius: theme.tokens.radius.card,
+  boxShadow: theme.tokens.shadow.card,
+
+  textAlign: 'center',
+
+  '&::backdrop': {
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    minHeight: '200px',
+    padding: theme.spacing(3),
+  },
+}));
+
+export const DialogContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  gap: theme.tokens.spacing.stack.sm,
+  marginTop: '24px',
+  marginBottom: '24px',
+}));
+
+export const Header = styled(Box)(({ theme }) => ({
+  fontWeight: theme.tokens.fontWeight.bold,
+  color: '#0a3265',
+  fontSize: theme.tokens.typography.bodyLarge.fontSize,
+}));

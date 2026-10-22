@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Container } from './styles';
+import { Container, BackButton } from './styles';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSubmit } from '@/app/hook/useSubmit';
 import SuccessDialog from '@/app/feature/step4/suceessfullModal';
@@ -53,7 +53,7 @@ const Submit = ({ formID }: Props) => {
           }}
         >
           <button type="submit" form={formID}>
-            Submit
+            Next Step
           </button>
         </div>
       )}
@@ -67,9 +67,7 @@ const Submit = ({ formID }: Props) => {
             color: '#92929c',
           }}
         >
-          <button type="button" onClick={handleBackButton}>
-            Go Back
-          </button>
+          <div onClick={handleBackButton}>Go Back</div>
 
           <button type="submit" form={formID}>
             Next Step
@@ -99,7 +97,7 @@ const Submit = ({ formID }: Props) => {
               color: '#92929c',
             }}
           >
-            <button type="button" onClick={handleBackButton} disabled={isSubmitting}>
+            <button type='button' onClick={handleBackButton} disabled={isSubmitting}>
               Go Back
             </button>
 
