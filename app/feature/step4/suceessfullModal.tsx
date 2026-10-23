@@ -17,29 +17,15 @@ export default function SuccessDialog({ open, onClose }: SuccessDialogProps) {
       aria-describedby="success-dialog-description"
     >
       <DialogContainer>
-        <DialogContent sx={{}} >
-          
-          <Box sx={{mb:4}}>
+        <DialogContent sx={{}}>
+          <Box sx={{ mb: 2, mt: 6 }}>
             <img src="icon-thank-you.svg" />
           </Box>
           <Header>Thank you!</Header>
-          <div>Thanks for confirming your subscription!<br/> We hope you have fun using our platform. If you ever need support, please feel free to email us at support@israel.com</div>
-          <Box>
-            <Button
-              variant="contained"
-              onClick={onClose}
-              sx={{
-                backgroundColor: '#483FFE',
-                textTransform: 'none',
-                px: 5,
-                borderRadius: 2,
-                '&:hover': {
-                  backgroundColor: '#3728db',
-                },
-              }}
-            >
-              Done
-            </Button>
+          <Box sx={{ mb: 6, color: ' #92929c' }}>
+            Thanks for confirming your subscription!
+            <br /> We hope you have fun using our <br /> platform. If you ever need support, <br />{' '}
+            please feel free to email us at support@israel.com
           </Box>
         </DialogContent>
       </DialogContainer>

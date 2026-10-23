@@ -63,26 +63,32 @@ const Step1Form = () => {
       <FormSection>
         <FormField>
           <FormLabel htmlFor="name">Name</FormLabel>
-
           <InputContent>
-            <Input id="name" type="text" placeholder="e.g. Stephen King" {...register('name')} />
-
+            <Input
+              id="name"
+              type="text"
+              error={!!errors.email}
+              placeholder="e.g. Stephen King"
+              {...register('name')}
+            />
             {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
           </InputContent>
         </FormField>
-
         <FormField>
           <FormLabel htmlFor="email">Email Address</FormLabel>
 
           <InputContent>
-            <Input
-              id="email"
-              type="email"
-              placeholder="e.g. stephenKing@gmail.com"
-              {...register('email')}
-            />
+            <InputContent>
+              <Input
+                id="email"
+                type="email"
+                placeholder="e.g. stephenKing@gmail.com"
+                {...register('email')}
+                error={!!errors.email}
+              />
 
-            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+              {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+            </InputContent>
           </InputContent>
         </FormField>
 
@@ -90,8 +96,13 @@ const Step1Form = () => {
           <FormLabel htmlFor="phone">Phone Number</FormLabel>
 
           <InputContent>
-            <Input id="phone" type="text" placeholder="+234 506 6050" {...register('phoneNo')} />
-
+            <Input
+              id="phone"
+              type="text"
+              error={!!errors.email}
+              placeholder="+234 506 6050"
+              {...register('phoneNo')}
+            />
             {errors.phoneNo && <ErrorMessage>{errors.phoneNo.message}</ErrorMessage>}
           </InputContent>
         </FormField>

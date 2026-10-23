@@ -97,7 +97,12 @@ const Submit = ({ formID }: Props) => {
               color: '#92929c',
             }}
           >
-            <button type='button' onClick={handleBackButton} disabled={isSubmitting}>
+            <button
+              style={{ backgroundColor: '#fff', color: '#92929c' }}
+              type="button"
+              onClick={handleBackButton}
+              disabled={isSubmitting}
+            >
               Go Back
             </button>
 

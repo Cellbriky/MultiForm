@@ -97,9 +97,7 @@ const Step2Form = () => {
                 type="radio"
                 value="arcade"
                 id="arcade"
-                {...register('plan', {
-                  required: 'Please select a plan to continue',
-                })}
+                {...register('plan')}
               />
             </PlanDiv>
 
@@ -121,9 +119,7 @@ const Step2Form = () => {
                 type="radio"
                 value="advanced"
                 id="advanced"
-                {...register('plan', {
-                  required: 'Please select a plan to continue',
-                })}
+                {...register('plan')}
               />
             </PlanDiv>
 
@@ -145,9 +141,7 @@ const Step2Form = () => {
                 type="radio"
                 value="pro"
                 id="pro"
-                {...register('plan', {
-                  required: 'Please select a plan to continue',
-                })}
+                {...register('plan')}
               />
             </PlanDiv>
           </FormField>
@@ -166,9 +160,7 @@ const Step2Form = () => {
                 type="radio"
                 value="monthly"
                 id="monthly"
-                {...register('option', {
-                  required: 'Please select a billing option to continue.',
-                })}
+                {...register('option')}
               />
 
               <OptionRadio type="radio" value="yearly" id="yearly" {...register('option')} />
@@ -178,9 +170,6 @@ const Step2Form = () => {
               Yearly
             </LabelTitle>
           </OptionContainer>
-
-          {errors.option && <ErrorMessage role="alert">{errors.option.message}</ErrorMessage>}
-
           {errors.option && <ErrorMessage>{errors.option.message}</ErrorMessage>}
         </FormSection>
       </FormContainer>

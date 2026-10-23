@@ -68,7 +68,7 @@ export const DialogContainer = styled('dialog')(({ theme }) => ({
   position: 'fixed',
   top: '50%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
+  transform: 'translate(-50%, -88%)',
 
   display: 'flex',
   flexDirection: 'column',
@@ -78,12 +78,9 @@ export const DialogContainer = styled('dialog')(({ theme }) => ({
 
   width: 'calc(100% - 32px)',
   maxWidth: '420px',
-
   minHeight: '220px',
   maxHeight: 'calc(100dvh - 32px)',
   overflowY: 'auto',
-
-  padding: theme.spacing(4),
 
   backgroundColor: '#fff',
   border: 'none',
@@ -107,12 +104,10 @@ export const DialogContent = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   flexDirection: 'column',
   gap: theme.tokens.spacing.stack.sm,
-  marginTop: '24px',
-  marginBottom: '24px',
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
   fontWeight: theme.tokens.fontWeight.bold,
   color: '#0a3265',
-  fontSize: theme.tokens.typography.bodyLarge.fontSize,
+  fontSize: theme.tokens.typography.h3.fontSize.mobile
 }));

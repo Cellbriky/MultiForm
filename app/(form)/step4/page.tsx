@@ -4,7 +4,7 @@ import SuccessDialog from '@/app/feature/step4/suceessfullModal'
 const page = () => {
   return (
     <div className="pageContainer">
-      <h1>Finishing U</h1>
+      <h1>Finishing Up</h1>
       <div className="caption">Double-check everything looks OK before confirming.</div>
       <Step4Form />
     </div>

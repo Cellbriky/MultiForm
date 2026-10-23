@@ -42,11 +42,22 @@ export const InputContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
 }));
-export const Input = styled('input')(({ theme }) => ({
+
+export const Input = styled('input', {
+  shouldForwardProp: (prop) => prop !== 'error',
+})<{ error?: boolean }>(({ theme, error }) => ({
   paddingInline: '12px',
   paddingBlock: '8px',
-  border: '1px solid #92929c',
+  border: `1px solid ${error ? 'red' : '#92929c'}`,
   borderRadius: '4px',
-  boxShadow: '  0.1px 0.1px 2px #92929c',
-  boxShaow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+  outline: 'none',
+  transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+  color: '#0B2349',
+  fontWeight: theme.tokens.fontWeight.medium,
+
+  '&:focus': {
+    borderColor: error ? 'red' : '#544C95',
+  },
 }));
+

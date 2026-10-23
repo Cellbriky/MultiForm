@@ -24,20 +24,21 @@ export const yearlyPlans = {
 } as const;
 
 export const step2Schema = z.object({
-  plan: z
-    .enum(['arcade', 'advanced', 'pro', ''])
-    .pipe(
-      z.enum(['arcade', 'advanced', 'pro']),
-    ),
+  plan: z.enum(['arcade', 'advanced', 'pro', '']).pipe(
+    z.enum(['arcade', 'advanced', 'pro'], {
+      error: 'Please select a subscription plan.',
+    }),
+  ),
 
-  option: z
-    .enum(['monthly', 'yearly', ''])
-    .pipe(
-      z.enum(['monthly', 'yearly']),
-    ),
+  option: z.enum(['monthly', 'yearly', '']).pipe(
+    z.enum(['monthly', 'yearly'], {
+      error: 'Please select a billing option.',
+    }),
+  ),
 });
 
 export type Step2Form = z.output<typeof step2Schema>;
+
 
 // STEP 3
 export const step3Schema = z.object({

@@ -41,7 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ubuntu.variable} ${ubuntu.className}`}>
+      <body
+        className={`${ubuntu.variable} ${ubuntu.className}`}
+      >
         <ThemeProvider>
           <LayoutContainer>
             <FormProvider>
