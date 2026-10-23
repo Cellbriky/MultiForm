@@ -9,6 +9,7 @@ import { ErrorMessage } from '../../styles/style';
 import { type FormValues } from '../../schema/formSchema';
 import {
   FormField,
+  PlanContainer,
   InputRadio,
   PlanDiv,
   Title,
@@ -84,66 +85,51 @@ const Step2Form = () => {
         <FormSection>
           <FormField>
             {/* Arcade */}
-            <PlanDiv htmlFor="arcade" active={selectedPlan === 'arcade'}>
-              <img src="/icon-arcade.svg" alt="Arcade" />
-              <div>
-                <Title>Arcade</Title>
-                <Overview>
-                  ${selectedPlans.arcade}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
-                </Overview>
-                <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
-              </div>
-              <InputRadio
-                type="radio"
-                value="arcade"
-                id="arcade"
-                {...register('plan')}
-              />
-            </PlanDiv>
-
+            <PlanContainer>
+              <PlanDiv htmlFor="arcade" active={selectedPlan === 'arcade'}>
+                <img src="/icon-arcade.svg" alt="Arcade" />
+                <div>
+                  <Title>Arcade</Title>
+                  <Overview>
+                    ${selectedPlans.arcade}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
+                  </Overview>
+                  <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
+                </div>
+                <InputRadio type="radio" value="arcade" id="arcade" {...register('plan')} />
+              </PlanDiv>
+            </PlanContainer>
             {/* Advanced */}
-            <PlanDiv htmlFor="advanced" active={selectedPlan === 'advanced'}>
-              <img src="/icon-advanced.svg" alt="Advanced" />
-
-              <div>
-                <Title>Advanced</Title>
-
-                <Overview>
-                  ${selectedPlans.advanced}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
-                </Overview>
-
-                <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
-              </div>
-
-              <InputRadio
-                type="radio"
-                value="advanced"
-                id="advanced"
-                {...register('plan')}
-              />
-            </PlanDiv>
-
+            <PlanContainer>
+              <PlanDiv htmlFor="advanced" active={selectedPlan === 'advanced'}>
+                <img src="/icon-advanced.svg" alt="Advanced" />
+                <div>
+                  <Title>Advanced</Title>
+                  <Overview>
+                    ${selectedPlans.advanced}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
+                  </Overview>
+                  <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
+                </div>
+                <InputRadio type="radio" value="advanced" id="advanced" {...register('plan')} />
+              </PlanDiv>
+            </PlanContainer>
             {/* Pro */}
-            <PlanDiv htmlFor="pro" active={selectedPlan === 'pro'}>
-              <img src="/icon-pro.svg" alt="Pro" />
+            <PlanContainer>
+              <PlanDiv htmlFor="pro" active={selectedPlan === 'pro'}>
+                <img src="/icon-pro.svg" alt="Pro" />
 
-              <div>
-                <Title>Pro</Title>
+                <div>
+                  <Title>Pro</Title>
 
-                <Overview>
-                  ${selectedPlans.pro}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
-                </Overview>
+                  <Overview>
+                    ${selectedPlans.pro}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
+                  </Overview>
 
-                <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
-              </div>
+                  <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
+                </div>
 
-              <InputRadio
-                type="radio"
-                value="pro"
-                id="pro"
-                {...register('plan')}
-              />
-            </PlanDiv>
+                <InputRadio type="radio" value="pro" id="pro" {...register('plan')} />
+              </PlanDiv>
+            </PlanContainer>
           </FormField>
 
           {errors.plan && <ErrorMessage>{errors.plan.message}</ErrorMessage>}
@@ -156,12 +142,7 @@ const Step2Form = () => {
             </LabelTitle>
 
             <RadioDiv>
-              <OptionRadio
-                type="radio"
-                value="monthly"
-                id="monthly"
-                {...register('option')}
-              />
+              <OptionRadio type="radio" value="monthly" id="monthly" {...register('option')} />
 
               <OptionRadio type="radio" value="yearly" id="yearly" {...register('option')} />
             </RadioDiv>

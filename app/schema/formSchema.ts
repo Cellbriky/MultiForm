@@ -5,7 +5,10 @@ import { z } from 'zod';
 export const step1Schema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters'),
   email: z.string().trim().email('Please enter a valid email address'),
-  phoneNo: z.string().trim().min(7, 'Please enter a valid phone number'),
+  phoneNo: z
+    .string()
+    .min(7, 'Phone number is required')
+    .regex(/^\+?[0-9\s()-]+$/, 'Enter a valid phone number'),
 });
 
 export type Step1Form = z.infer<typeof step1Schema>;

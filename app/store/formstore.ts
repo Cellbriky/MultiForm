@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { FormData } from '../type/form';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import type { FormData } from '../type/form';
 
 type FormStore = {
   formData: FormData;
@@ -21,6 +21,7 @@ const initialFormData: FormData = {
 
   planAmount: 0,
 
+  // Add-ons
   addOn: {
     onlineService: true,
     largeStorage: true,
@@ -29,7 +30,6 @@ const initialFormData: FormData = {
     customizable: false,
   },
 };
-
 
 export const useFormStore = create<FormStore>()(
   persist(
@@ -41,6 +41,14 @@ export const useFormStore = create<FormStore>()(
           formData: {
             ...state.formData,
             ...data,
+
+            // Preserve existing add-on fields
+            addOn: data.addOn
+              ? {
+                  ...state.formData.addOn,
+                  ...data.addOn,
+                }
+              : state.formData.addOn,
           },
         }));
       },
