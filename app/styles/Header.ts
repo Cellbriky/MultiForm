@@ -1,5 +1,6 @@
 import { Box, Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { positive } from 'zod';
 
 // Header background and layout
 export const HeaderContainer = styled(Box)(({ theme }) => ({
@@ -209,7 +210,10 @@ export const NavCaption = styled(Box)(({ theme }) => ({
   fontWeight: 300,
   fontSize: theme.tokens.typography.overline.fontSize,
   lineHeight: theme.tokens.typography.overline.lineHeight,
-
+  [theme.breakpoints.up('md')]: {
+    position: "relative",
+    top:"4px"
+  },
   [theme.breakpoints.up('lg')]: {
     whiteSpace: 'nowrap',
   },
