@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 import { FormContainer, FormSection } from '../step1/styles';
 import { ErrorMessage } from '../../styles/style';
 import { type FormValues } from '../../schema/formSchema';
+import plan from './step2.data';
+import { pricing, getPlanPrice, type PlanType, BillingOption } from '../config/pricing';
+
 import {
   FormField,
   PlanContainer,
@@ -20,23 +23,29 @@ import {
   RadioDiv,
   YearOverview,
 } from './step2Form';
-// Monthly prices
-const plans = {
-  arcade: 9,
-  advanced: 12,
-  pro: 15,
-};
 
-// Yearly prices
-const yearlyPlans = {
-  arcade: 90,
-  advanced: 120,
-  pro: 150,
-};
+const Plans: Pick<plan, 'id' | 'name' | 'icon'>[] = [
+  {
+    id: 'arcade',
+    name: 'Arcade',
+    icon: '/icon-arcade.svg',
+  },
+  {
+    id: 'advanced',
+    name: 'Advanced',
+    icon: '/icon-advanced.svg',
+  },
+  {
+    id: 'pro',
+    name: 'Pro',
+    icon: '/icon-pro.svg',
+  },
+];
 
 const Step2Form = () => {
   const router = useRouter();
   const { formData, updateForm } = useFormStore();
+
   const {
     register,
     trigger,
@@ -56,23 +65,26 @@ const Step2Form = () => {
   const selectedPlan = watch('plan');
   const selectedOption = watch('option');
 
-  const selectedPlans = selectedOption === 'yearly' ? yearlyPlans : plans;
-
   const onSubmit = async () => {
     const isValid = await trigger(['plan', 'option']);
-    if (!isValid) {
-      return;
-    }
+
+    if (!isValid) return;
+
     const data = getValues(['plan', 'option']);
+    const [plan, option] = data;
+
     const updatedData = {
-      plan: data[0],
-      option: data[1],
-      planAmount: selectedPlans[data[0] as keyof typeof selectedPlans],
+      plan,
+      option,
+      planAmount: getPlanPrice(plan as PlanType, option as BillingOption),
     };
+
     updateForm(updatedData);
-    router.push(`/step3/${data[1]}`);
+    router.push(`/step3/${option}`);
+
     console.log('Step 2 data:', updatedData);
   };
+
   return (
     <div>
       <FormContainer
@@ -84,57 +96,32 @@ const Step2Form = () => {
       >
         <FormSection>
           <FormField>
-            {/* Arcade */}
             <PlanContainer>
-              <PlanDiv htmlFor="arcade" active={selectedPlan === 'arcade'}>
-                <img src="/icon-arcade.svg" alt="Arcade" />
-                <div>
-                  <Title>Arcade</Title>
-                  <Overview>
-                    ${selectedPlans.arcade}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
-                  </Overview>
-                  <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
-                </div>
-                <InputRadio type="radio" value="arcade" id="arcade" {...register('plan')} />
-              </PlanDiv>
-            </PlanContainer>
-            {/* Advanced */}
-            <PlanContainer>
-              <PlanDiv htmlFor="advanced" active={selectedPlan === 'advanced'}>
-                <img src="/icon-advanced.svg" alt="Advanced" />
-                <div>
-                  <Title>Advanced</Title>
-                  <Overview>
-                    ${selectedPlans.advanced}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
-                  </Overview>
-                  <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
-                </div>
-                <InputRadio type="radio" value="advanced" id="advanced" {...register('plan')} />
-              </PlanDiv>
-            </PlanContainer>
-            {/* Pro */}
-            <PlanContainer>
-              <PlanDiv htmlFor="pro" active={selectedPlan === 'pro'}>
-                <img src="/icon-pro.svg" alt="Pro" />
+              {Plans.map((plan) => (
+                <PlanDiv key={plan.id} htmlFor={plan.id} active={selectedPlan === plan.id}>
+                  <img src={plan.icon} alt={plan.name} />
 
-                <div>
-                  <Title>Pro</Title>
+                  <div>
+                    <Title>{plan.name}</Title>
 
-                  <Overview>
-                    ${selectedPlans.pro}/{selectedOption === 'yearly' ? 'yr' : 'mo'}
-                  </Overview>
+                    <Overview>
+                      ${pricing.plans[plan.id][selectedOption as 'monthly' | 'yearly']}/
+                      {selectedOption === 'monthly' ? 'mo' : 'yr'}
+                    </Overview>
 
-                  <YearOverview>{selectedOption === 'yearly' ? '2 months free' : ''}</YearOverview>
-                </div>
+                    <YearOverview>
+                      {selectedOption === 'yearly' ? '2 months free' : ''}
+                    </YearOverview>
+                  </div>
 
-                <InputRadio type="radio" value="pro" id="pro" {...register('plan')} />
-              </PlanDiv>
+                  <InputRadio type="radio" value={plan.id} id={plan.id} {...register('plan')} />
+                </PlanDiv>
+              ))}
             </PlanContainer>
           </FormField>
 
           {errors.plan && <ErrorMessage>{errors.plan.message}</ErrorMessage>}
 
-          {/* Billing Option */}
           {/* Billing Option */}
           <OptionContainer>
             <LabelTitle htmlFor="monthly" active={selectedOption === 'monthly'}>
@@ -151,6 +138,7 @@ const Step2Form = () => {
               Yearly
             </LabelTitle>
           </OptionContainer>
+
           {errors.option && <ErrorMessage>{errors.option.message}</ErrorMessage>}
         </FormSection>
       </FormContainer>

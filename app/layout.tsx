@@ -18,15 +18,16 @@ const ubuntu = localFont({
     {
       path: '../public/fonts/Ubuntu-Medium.ttf',
       weight: '500',
-      style: 'Medium',
+      style: 'normal',
     },
     {
       path: '../public/fonts/Ubuntu-Bold.ttf',
       weight: '700',
-      style: 'Bold',
-    }
+      style: 'normal',
+    },
   ],
   variable: '--font-ubuntu',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {

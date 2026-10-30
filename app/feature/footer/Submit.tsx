@@ -13,18 +13,12 @@ type Props = {
 const Submit = ({ formID }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
-
   const { submitForm, isSubmitting, error, success } = useSubmit();
-
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-
   const isStep1 = pathname === '/';
   const isStep2 = pathname === '/step2';
-
   const isStep3 = pathname === '/step3/monthly' || pathname === '/step3/yearly';
-
   const isStep4 = pathname === '/step4';
-
   const handleBackButton = () => {
     if (pathname === '/step2') {
       router.push('/');

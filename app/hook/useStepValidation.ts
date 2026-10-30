@@ -4,22 +4,7 @@ import type { FormValues } from '@/app/schema/formSchema';
 import { useFormContext } from 'react-hook-form';
 import { useFormStore } from '@/app/store/formstore';
 import { useRouter } from 'next/navigation';
-import { useFormState } from 'react-dom';
-
-const plans = {
-  arcade: 9,
-  advanced: 12,
-  pro: 15,
-};
-
-const yearlyPlans = {
-  arcade: 90,
-  advanced: 120,
-  pro: 150,
-};
-type Step3PageProps = {
-  choice: 'monthly' | 'yearly';
-};
+import{ pricing,getAddOnPrice, getPlanPrice, type PlanType, BillingOption }  from '../feature/config/pricing';
 
 const addOnsPlan = {
   onlineService: 1,
@@ -57,17 +42,17 @@ export const useSubmit = () => {
 
     if (!isValid) return;
 
-    const data = getValues();
 
-    const selectedPlans = data.option === 'yearly' ? yearlyPlans : plans;
+    const data = getValues(['plan', 'option']);
+    const [plan, option] = data;
 
-    updateForm({
-      plan: data.plan,
-      option: data.option,
-      planAmount: selectedPlans[data.plan as keyof typeof selectedPlans],
-    });
-
-    router.push(`/step3/${data.option}`);
+    const updatedData = {
+      plan,
+      option,
+      planAmount: getPlanPrice(plan as PlanType, option as BillingOption),
+    };
+    updateForm(updatedData);
+    router.push(`/step3/${option}`);
   };
 
 const submitStep3 = async () => {

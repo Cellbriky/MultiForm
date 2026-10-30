@@ -1,7 +1,5 @@
 import { Box, Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { positive } from 'zod';
-
 // Header background and layout
 export const HeaderContainer = styled(Box)(({ theme }) => ({
   // Mobile: existing styles
@@ -13,7 +11,6 @@ export const HeaderContainer = styled(Box)(({ theme }) => ({
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
- 
 
   // Tablet: 768px and above
   [theme.breakpoints.up('md')]: {

@@ -33,8 +33,8 @@ const FormProvider = ({ children }: Props) => {
       plan: '',
       option: '',
       addOn: {
-        onlineService: true,
-        largeStorage: true,
+        onlineService: false,
+        largeStorage: false,
         customizable: false,
       },
     },
