@@ -1,32 +1,63 @@
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
-import { supabaseAdmin } from '@/lib/supabase/admin';
 
-const submissionSchema = z.object({
-  name: z.string().trim().min(1).max(100),
-  email: z.string().trim().email().max(254),
-  phoneNo: z.string().trim().min(7).max(30),
-  plan: z.enum(['arcade', 'advanced', 'pro']),
-  option: z.enum(['monthly', 'yearly']),
-  addOn: z.object({
-    onlineService: z.boolean(),
-    largeStorage: z.boolean(),
-    customizable: z.boolean(),
-  }),
-  totalAmount: z.number().finite().nonnegative(),
-});
+import { supabaseAdmin } from '@/lib/supabase/admin';
+import { formSchema } from '@/app/schema/formSchema';
 
 export async function POST(request: Request) {
   try {
-    const body: unknown = await request.json();
-    const result = submissionSchema.safeParse(body);
+    // 1. Read incoming request
+    const body = await request.json();
 
-    if (!result.success) {
-      return NextResponse.json({ message: 'Invalid form data.' }, { status: 400 });
+    // 2. Validate incoming payload
+    const validation = formSchema.safeParse(body);
+
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid form submission',
+          errors: validation.error.flatten(),
+        },
+        { status: 400 },
+      );
     }
 
-    const data = result.data;
+    // 3. Use validated data only
+    const data = validation.data;
 
+    // 4. Plan prices
+    const planPrices = {
+      monthly: {
+        arcade: 9,
+        advanced: 12,
+        pro: 15,
+      },
+      yearly: {
+        arcade: 90,
+        advanced: 120,
+        pro: 150,
+      },
+    };
+
+    // 5. Add-on prices
+    const addonPrices = {
+      monthly: {
+        onlineService: 1,
+        largeStorage: 2,
+      },
+      yearly: {
+        onlineService: 10,
+        largeStorage: 20,
+      },
+    };
+
+    // 6. Calculate total amount on the server
+    const totalAmount =
+      planPrices[data.option][data.plan] +
+      (data.addOn.onlineService ? addonPrices[data.option].onlineService : 0) +
+      (data.addOn.largeStorage ? addonPrices[data.option].largeStorage : 0);
+
+    // 7. Insert validated and calculated data into Supabase
     const { error } = await supabaseAdmin.from('form_submissions').insert({
       name: data.name,
       email: data.email,
@@ -34,17 +65,38 @@ export async function POST(request: Request) {
       plan: data.plan,
       billing_option: data.option,
       add_ons: data.addOn,
-      total_amount: data.totalAmount,
+      total_amount: totalAmount,
     });
 
     if (error) {
-      console.error('Submission insert failed:', error.message);
+      console.error('Supabase insertion error:', error);
 
-      return NextResponse.json({ message: 'Unable to save your submission.' }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Failed to save submission',
+        },
+        { status: 500 },
+      );
     }
 
-    return NextResponse.json({ message: 'Form submitted successfully.' }, { status: 201 });
-  } catch {
-    return NextResponse.json({ message: 'Invalid request.' }, { status: 400 });
+    // 8. Return successful response
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Form submitted successfully',
+      },
+      { status: 201 },
+    );
+  } catch (error) {
+    console.error('Submission error:', error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Something went wrong',
+      },
+      { status: 500 },
+    );
   }
 }

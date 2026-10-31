@@ -99,7 +99,7 @@ const Step1Form = () => {
             <Input
               id="phone"
               type="text"
-              error={!!errors.email}
+              error={!!errors.phoneNo}
               placeholder="+234 506 6050"
               {...register('phoneNo')}
             />

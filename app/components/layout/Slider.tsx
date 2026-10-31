@@ -28,17 +28,22 @@ const Header = () => {
   // Validate Step 1 before navigating forward
   const handleSubmit2 = async (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    await submitStep1();
+
     switch (pathname) {
       case '/':
         await submitStep1();
         break;
+
       case '/step2':
         await submitStep2();
         break;
+
       case '/step3/monthly':
       case '/step3/yearly':
-        router.push('/step2');
+        await submitStep3();
+        break;
+
+      default:
         break;
     }
   };
