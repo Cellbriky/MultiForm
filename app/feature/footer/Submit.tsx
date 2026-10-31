@@ -61,7 +61,13 @@ const Submit = ({ formID }: Props) => {
             color: '#92929c',
           }}
         >
-          <div onClick={handleBackButton}>Go Back</div>
+          <button
+            style={{ backgroundColor: '#fff', color: '#92929c' }}
+            type="button"
+            onClick={handleBackButton}
+          >
+            Go Back
+          </button>
 
           <button type="submit" form={formID}>
             Next Step
